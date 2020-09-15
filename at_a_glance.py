@@ -11,4 +11,4 @@ while True:
         for x in json.loads(r.content)["items"]:
             print (x["views"])
     except:
-        print("read error")
+        print("Error occured while reading response")
