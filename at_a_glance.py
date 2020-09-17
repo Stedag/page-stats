@@ -13,16 +13,19 @@ except:
 
 while True:
     query =input("Enter query below (or \"quit\" to quit):").strip()
+    if query=="quit":
+        break
     try:
         page = wiki.search(query)[0]
         r=requests.get("/".join(["https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article","en.wikipedia.org","all-access", "all-agents",page,"monthly/20200101/20200909"]))
+        error=False
     except:
         print("Query was unsuccessfull.")
-    if query=="keys":
-        print(list(words.keys()))    
-    elif query=="quit":
-        break
-
+        error=True
+    if error:
+        pass
+    elif query=="keys":
+        print(list(words.keys()))
     else:
         print("last week of daily pageviews for ",page,":")
         words[page]={}
