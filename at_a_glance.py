@@ -13,8 +13,11 @@ except:
 
 while True:
     query =input("Enter query below (or \"quit\" to quit):").strip()
-    page = wiki.search(query)[0]
-    r=requests.get("/".join(["https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article","en.wikipedia.org","all-access", "all-agents",page,"monthly/20200101/20200909"]))
+    try:
+        page = wiki.search(query)[0]
+        r=requests.get("/".join(["https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article","en.wikipedia.org","all-access", "all-agents",page,"monthly/20200101/20200909"]))
+    except:
+        print("Query was unsuccessfull.")
     if query=="keys":
         print(list(words.keys()))    
     elif query=="quit":
@@ -30,6 +33,6 @@ while True:
                 words[page]["viewslist"].append(item["views"])
             print(words[page]["viewslist"])
         except:
-            print("Error occured while reading response")
+            print("Error occured while reading response.")
         joblib.dump(words,fname)
         
